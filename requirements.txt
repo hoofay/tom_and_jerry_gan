@@ -1,4 +1,4 @@
-PIL==22.2.2
+PIL
 os
-numpy==1.19.2
+numpy
 tensorflow==2.6.0
