@@ -1,5 +1,4 @@
 streamlit
 Pillow
-os
 numpy
 tensorflow==2.6.0
