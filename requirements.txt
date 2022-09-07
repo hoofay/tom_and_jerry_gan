@@ -1,4 +1,4 @@
-PIL
+PIL==8.0.1
 os
-numpy
-tensorflow
+numpy==1.19.2
+tensorflow==2.6.0
