@@ -35,6 +35,11 @@ def image_choice(upload_pic):
 
 input_image = image_choice(upload_pic)
 
+base_width = 600
+w_percent = (base_width/float(input_image.size[0]))
+h_size = int((float(input_image.size[1])*float(w_percent)))
+input_image = input_image.resize((base_width,h_size), Image.ANTIALIAS)
+
 # display input image
 st.image(input_image, caption = 'Your Photo')
 
@@ -42,7 +47,7 @@ st.image(input_image, caption = 'Your Photo')
 def main(m_path, img_path):
     imported = tf.saved_model.load(m_path)
     f = imported.signatures['serving_default']
-    img = np.array(Image.open(img_path).convert('RGB'))
+    img = np.array(img_path.convert('RGB'))
     img = np.expand_dims(img,0).astype(np.float32) / 127.5 - 1
     out = f(tf.constant(img))['output_1']
     out = ((out.numpy().squeeze() + 1) * 127.5).astype(np.uint8)
@@ -51,13 +56,18 @@ def main(m_path, img_path):
 # scoring image choice
 def scoring_image(upload_pic):
     if upload_pic is not None:
-        scoring_image = upload_pic
+        scoring_image = Image.open(upload_pic)
         return(scoring_image)
     else:
-        scoring_image = 'ski.jpg'
+        scoring_image = Image.open('ski.jpg')
         return(scoring_image)
 
 img_out = scoring_image(upload_pic)    
+
+base_width_out = 600
+w_percent_out = (base_width_out/float(img_out.size[0]))
+h_size_out = int((float(img_out.size[1])*float(w_percent_out)))
+img_out = img_out.resize((base_width_out,h_size_out), Image.ANTIALIAS)
 
 # run score
 output = main('tajg/tj_gan',img_out) # update to chosen image
