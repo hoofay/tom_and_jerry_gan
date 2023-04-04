@@ -2,4 +2,3 @@ streamlit
 Pillow
 numpy
 tensorflow==2.6.0
-typing_extensions
